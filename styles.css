@@ -1460,7 +1460,7 @@ html.deck-mode .site-footer {
 }
 
 
-/* Phone deck: full-bleed at rest; triangle peeks only while morphing */
+/* Phone: full-bleed reading card in front; triangle peeks only behind */
 html.deck-one .scene-stage-root {
   overflow: hidden;
 }
@@ -1473,7 +1473,17 @@ html.deck-one .deck-card {
   will-change: transform, opacity;
 }
 
-html.deck-one:not(.deck-morphing) .deck-card.is-preview {
+html.deck-one .deck-card.is-phone-front {
+  filter: none;
+}
+
+html.deck-one .deck-card.is-phone-peek {
+  filter: brightness(0.72) saturate(0.9);
+  pointer-events: none !important;
+}
+
+html.deck-one:not(.deck-morphing) .deck-card.is-preview,
+html.deck-one:not(.deck-morphing) .deck-card.is-phone-peek {
   visibility: hidden;
 }
 
