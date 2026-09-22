@@ -36,4 +36,17 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
+# Social / link-preview crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
 Sitemap: https://anythink.cz/sitemap.xml

@@ -492,7 +492,7 @@
       // Only skip true controls — not whole FAQ/product cards (those need swipe)
       if (
         e.target.closest(
-          "a, button, input, textarea, summary, .nav-toggle, .faq-q, .product-row"
+          "a, button, input, textarea, summary, .nav-toggle, .faq-q, .faq-a, .faq-list.is-detail, .product-row"
         )
       ) {
         touch = null;
@@ -572,6 +572,8 @@
       (b) => b.getAttribute("aria-expanded") === "true"
     );
     list.classList.toggle("is-detail", anyOpen);
+    const section = list.closest("#faq") || list.closest("section");
+    if (section) section.classList.toggle("faq-detail", anyOpen);
     list.querySelectorAll(".faq-item").forEach((item) => {
       const q = item.querySelector(".faq-q");
       const on = q && q.getAttribute("aria-expanded") === "true";
