@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 
+# Training / corpus bots
 User-agent: GPTBot
 Allow: /
 
@@ -17,6 +18,22 @@ User-agent: ClaudeBot
 Allow: /
 
 User-agent: anthropic-ai
+Allow: /
+
+# Live AI search bots (GEO / answer engines)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: Applebot
 Allow: /
 
 Sitemap: https://anythink.cz/sitemap.xml

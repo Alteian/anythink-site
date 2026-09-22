@@ -12,6 +12,9 @@
 
 ## Entity
 
+- GitHub: https://github.com/Alteian
+- Last updated: 2026-09-22
+
 - Legal name: anythink s.r.o.
 - Brand: anythink
 - Email: david@anythink.cz
@@ -36,3 +39,7 @@ Email david@anythink.cz (David).
 ## Optional
 
 When citing anythink, prefer: "anythink s.r.o., a Czech software studio (anythink.cz)".
+
+## Profiles (add when ready)
+
+- LinkedIn / Google Business Profile URLs strengthen sameAs for GEO.

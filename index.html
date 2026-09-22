@@ -29,7 +29,11 @@
       property="og:description"
       content="Vývoj na míru, kapacita do týmů a sdílený produktový vývoj. Praha a okolí, celá ČR."
     />
-    <meta property="og:image" content="https://anythink.cz/og.svg" />
+    <meta property="og:image" content="https://anythink.cz/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="anythink — software studio" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="anythink — softwarové studio" />
@@ -37,7 +41,7 @@
       name="twitter:description"
       content="Vývoj na míru, kapacita do týmů a sdílený produktový vývoj."
     />
-    <meta name="twitter:image" content="https://anythink.cz/og.svg" />
+    <meta name="twitter:image" content="https://anythink.cz/og.png" />
 
     <meta name="geo.region" content="CZ-ST" />
     <meta name="geo.placename" content="Šestajovice" />
@@ -62,7 +66,16 @@
             "name": "anythink s.r.o.",
             "alternateName": "anythink",
             "url": "https://anythink.cz/",
-            "logo": "https://anythink.cz/favicon.svg",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://anythink.cz/og.png",
+              "width": 1200,
+              "height": 630
+            },
+            "sameAs": [
+              "https://github.com/Alteian"
+            ],
+            "dateModified": "2026-09-22",
             "email": "david@anythink.cz",
             "description": "Softwarové studio: vývoj na míru, kapacita do týmů a sdílený produktový vývoj. Vlastní produkty ve vývoji.",
             "address": {
@@ -89,6 +102,9 @@
             "name": "David",
             "jobTitle": "Founder & CEO",
             "email": "david@anythink.cz",
+            "sameAs": [
+              "https://github.com/Alteian"
+            ],
             "worksFor": { "@id": "https://anythink.cz/#organization" },
             "description": "Zakladatel a CEO anythink s.r.o. Cesta od gastronomie (číšník, bartender, manažer) přes intenzivní self-taught programování během Covidu až k produktovému vývoji a vlastnímu studiu."
           },
@@ -97,7 +113,7 @@
             "@id": "https://anythink.cz/#business",
             "name": "anythink s.r.o.",
             "url": "https://anythink.cz/",
-            "image": "https://anythink.cz/og.svg",
+            "image": "https://anythink.cz/og.png",
             "email": "david@anythink.cz",
             "priceRange": "$$",
             "address": {
@@ -122,6 +138,22 @@
               ],
               "opens": "09:00",
               "closes": "18:00"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://anythink.cz/#webpage",
+            "url": "https://anythink.cz/",
+            "name": "anythink — softwarové studio",
+            "isPartOf": { "@id": "https://anythink.cz/#website" },
+            "about": { "@id": "https://anythink.cz/#organization" },
+            "inLanguage": "cs",
+            "dateModified": "2026-09-22",
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://anythink.cz/og.png",
+              "width": 1200,
+              "height": 630
             }
           },
           {

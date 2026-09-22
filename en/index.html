@@ -29,7 +29,11 @@
       property="og:description"
       content="Custom builds, team capacity, and shared product development. Prague area, nationwide CZ."
     />
-    <meta property="og:image" content="https://anythink.cz/og.svg" />
+    <meta property="og:image" content="https://anythink.cz/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="anythink — software studio" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="anythink — software studio" />
@@ -37,7 +41,7 @@
       name="twitter:description"
       content="Custom builds, team capacity, and shared product development."
     />
-    <meta name="twitter:image" content="https://anythink.cz/og.svg" />
+    <meta name="twitter:image" content="https://anythink.cz/og.png" />
 
     <meta name="geo.region" content="CZ-ST" />
     <meta name="geo.placename" content="Šestajovice" />
@@ -62,7 +66,16 @@
             "name": "anythink s.r.o.",
             "alternateName": "anythink",
             "url": "https://anythink.cz/",
-            "logo": "https://anythink.cz/favicon.svg",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://anythink.cz/og.png",
+              "width": 1200,
+              "height": 630
+            },
+            "sameAs": [
+              "https://github.com/Alteian"
+            ],
+            "dateModified": "2026-09-22",
             "email": "david@anythink.cz",
             "description": "Software studio: custom development, engineering capacity for teams, and shared product development. House products in private development.",
             "address": {
@@ -89,6 +102,9 @@
             "name": "David",
             "jobTitle": "Founder & CEO",
             "email": "david@anythink.cz",
+            "sameAs": [
+              "https://github.com/Alteian"
+            ],
             "worksFor": { "@id": "https://anythink.cz/#organization" },
             "description": "Founder and CEO of anythink s.r.o. Path from hospitality (waiter, bartender, manager) through intensive self-taught programming during Covid to product engineering and founding the studio."
           },
@@ -97,7 +113,7 @@
             "@id": "https://anythink.cz/#business",
             "name": "anythink s.r.o.",
             "url": "https://anythink.cz/en/",
-            "image": "https://anythink.cz/og.svg",
+            "image": "https://anythink.cz/og.png",
             "email": "david@anythink.cz",
             "priceRange": "$$",
             "address": {
@@ -110,6 +126,22 @@
               "@type": "GeoCoordinates",
               "latitude": 50.1167,
               "longitude": 14.6833
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://anythink.cz/en/#webpage",
+            "url": "https://anythink.cz/en/",
+            "name": "anythink — software studio",
+            "isPartOf": { "@id": "https://anythink.cz/#website" },
+            "about": { "@id": "https://anythink.cz/#organization" },
+            "inLanguage": "en",
+            "dateModified": "2026-09-22",
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://anythink.cz/og.png",
+              "width": 1200,
+              "height": 630
             }
           },
           {
