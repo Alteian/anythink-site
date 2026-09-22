@@ -1,13 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
-  <rect width="1200" height="630" fill="#050506"/>
-  <rect x="0" y="0" width="1200" height="630" fill="url(#g)" opacity="0.9"/>
+  <rect width="1200" height="630" fill="#04060C"/>
   <defs>
-    <linearGradient id="g" x1="200" y1="80" x2="1000" y2="560" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#1a1c22"/>
-      <stop offset="0.55" stop-color="#050506"/>
-      <stop offset="1" stop-color="#12141a"/>
+    <linearGradient id="field" x1="1200" y1="0" x2="780" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#355C96" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#355C96" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <text x="96" y="320" fill="#F7F8FA" font-family="Syne, Arial, sans-serif" font-size="120" font-weight="800" letter-spacing="-6">anythink</text>
-  <text x="100" y="390" fill="#8A909B" font-family="Outfit, Arial, sans-serif" font-size="32">software studio � anythink.cz</text>
+  <rect width="1200" height="630" fill="url(#field)"/>
+  <rect x="860" y="170" width="220" height="220" rx="18" stroke="#355C96" stroke-width="3"/>
+  <circle cx="1048" cy="226" r="14" fill="#ECF0F6"/>
+  <line x1="88" y1="470" x2="720" y2="470" stroke="#8294A8" stroke-opacity="0.25" stroke-width="1"/>
+  <text x="88" y="290" fill="#ECF0F6" font-family="Syne, Liberation Sans, Arial, sans-serif" font-size="96" font-weight="800" letter-spacing="-5">anythink</text>
+  <text x="88" y="350" fill="#8294A8" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="28">Software studio · Softwarové studio</text>
+  <text x="88" y="394" fill="#586678" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="24">Custom · Capacity · Product</text>
+  <text x="88" y="580" fill="#586678" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="20">anythink.cz · Praha &amp; ČR</text>
 </svg>
