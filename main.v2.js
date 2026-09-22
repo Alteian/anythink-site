@@ -132,27 +132,29 @@
       return { peek: full, full };
     }
 
-    const mainW = stageW * 0.62;
+    // Larger main (~70%); peeks tuck under its right edge and may overlap each other
+    const mainW = stageW * 0.7;
     const mainH = stageH;
-    const peekW = stageW - mainW - gap;
-    const peekH = (stageH - gap) / 2;
+    const mainPeekOverlap = 28; // peeks slide under the main card a bit
+    const peekStackOverlap = Math.round((stageH - gap) * 0.08); // top peek over bottom
+    const peekLeft = padX + mainW - mainPeekOverlap;
+    const peekW = Math.max(120, vw - padX - peekLeft);
+    const peekH = (stageH - gap) / 2 + peekStackOverlap / 2;
 
     // Fit the full main card into a peek cell without distorting
     const nextS = Math.min(peekW / mainW, peekH / mainH);
-    const furtherS = nextS * 0.86;
+    const furtherS = nextS * 0.9;
 
-    const nextLeft = padX + mainW + gap;
-    const nextTop = padY + peekH + gap;
-    const furtherLeft = padX + mainW + gap;
+    const nextLeft = peekLeft;
+    const nextTop = padY + (stageH - gap) / 2 + gap - peekStackOverlap;
+    const furtherLeft = peekLeft;
     const furtherTop = padY; // same top inset as main
 
     function place(cellLeft, cellTop, cellW, cellH, s, o, z) {
       const fittedW = mainW * s;
-      const fittedH = mainH * s;
       return {
-        x: cellLeft + Math.max(0, (cellW - fittedW) / 2),
-        // Top-align with the cell (further cell starts at padY = main top).
-        // Never let oversized fits climb under the header.
+        // Prefer right-align in the peek column so overlap with main reads clean
+        x: cellLeft + Math.max(0, cellW - fittedW),
         y: cellTop,
         s,
         o,
@@ -165,7 +167,7 @@
       mainH,
       main: { x: padX, y: padY, s: 1, o: 1, z: 5 },
       next: place(nextLeft, nextTop, peekW, peekH, nextS, 0.94, 4),
-      further: place(furtherLeft, furtherTop, peekW, peekH, furtherS, 0.78, 3),
+      further: place(furtherLeft, furtherTop, peekW, peekH, furtherS, 0.82, 3),
       enter: {
         x: vw + 40,
         y: furtherTop,
