@@ -489,10 +489,10 @@
     "touchstart",
     (e) => {
       if (e.touches.length !== 1) return;
-      // Let real controls keep native tap; deck still owns the page swipe
+      // Only skip true controls — not whole FAQ/product cards (those need swipe)
       if (
         e.target.closest(
-          "a, button, input, textarea, summary, .nav-toggle, [data-faq], [data-product-list], .faq-q, .faq-a, .product-row, .product-detail"
+          "a, button, input, textarea, summary, .nav-toggle, .faq-q, .product-row"
         )
       ) {
         touch = null;
@@ -502,11 +502,14 @@
       cancelSnap();
       pendingDir = 0;
       touch = {
+        x0: t.clientX,
         y0: t.clientY,
         p0: Math.round(viewP),
+        x: t.clientX,
         y: t.clientY,
         t0: performance.now(),
         locked: false,
+        axis: null,
       };
     },
     { passive: true }
@@ -517,17 +520,28 @@
     (e) => {
       if (!touch || e.touches.length !== 1) return;
       const t = e.touches[0];
+      const dx = touch.x0 - t.clientX;
       const dy = touch.y0 - t.clientY;
 
       // Axis lock after small slop so taps don't drag
       if (!touch.locked) {
-        if (Math.abs(dy) < 10) return;
+        if (Math.max(Math.abs(dx), Math.abs(dy)) < 10) return;
         touch.locked = true;
+        // One-card / phone: allow horizontal OR vertical page swipe
+        touch.axis =
+          document.documentElement.classList.contains("deck-one") &&
+          Math.abs(dx) > Math.abs(dy)
+            ? "x"
+            : "y";
       }
 
       e.preventDefault();
+      touch.x = t.clientX;
       touch.y = t.clientY;
-      const drag = dy / window.innerHeight;
+      const drag =
+        touch.axis === "x"
+          ? dx / Math.max(1, window.innerWidth)
+          : dy / Math.max(1, window.innerHeight);
       viewP = Math.max(-0.15, Math.min(maxP + 0.15, touch.p0 + drag));
       render(viewP);
     },
@@ -553,6 +567,18 @@
 
 
   // FAQ + product list expand (buttons; details fought deck swipe on phones)
+  function syncFaqView(list) {
+    const anyOpen = [...list.querySelectorAll(".faq-q")].some(
+      (b) => b.getAttribute("aria-expanded") === "true"
+    );
+    list.classList.toggle("is-detail", anyOpen);
+    list.querySelectorAll(".faq-item").forEach((item) => {
+      const q = item.querySelector(".faq-q");
+      const on = q && q.getAttribute("aria-expanded") === "true";
+      item.classList.toggle("is-open", !!on);
+    });
+  }
+
   function bindExpandList(rootSel, btnSel, openExclusive) {
     document.querySelectorAll(rootSel).forEach((list) => {
       list.querySelectorAll(btnSel).forEach((btn) => {
@@ -573,8 +599,10 @@
           }
           btn.setAttribute("aria-expanded", open ? "false" : "true");
           if (panel) panel.hidden = open;
+          if (list.hasAttribute("data-faq")) syncFaqView(list);
         });
       });
+      if (list.hasAttribute("data-faq")) syncFaqView(list);
     });
   }
   bindExpandList("[data-faq]", ".faq-q", true);
