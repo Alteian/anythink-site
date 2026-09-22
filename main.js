@@ -97,15 +97,16 @@
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const headerEl = document.querySelector(".site-header");
-    const headerH = Math.max(
+    const headerRect = headerEl?.getBoundingClientRect();
+    // Place whole cards under the fixed header bar (slot y, not inner padding)
+    const headerBottom = Math.max(
       64,
-      Math.ceil(headerEl?.getBoundingClientRect().height || 64)
+      Math.ceil((headerRect && headerRect.bottom) || 64)
     );
     const oneCard = vw < 700;
     const gap = oneCard ? 8 : 14;
     const padX = oneCard ? 10 : 20;
-    // Same top inset for main + peek stack (never under the nav)
-    const padY = headerH + (oneCard ? 8 : 14);
+    const padY = headerBottom + (oneCard ? 12 : 18);
     const bottom = oneCard ? 36 : 28;
 
     const stageW = vw - padX * 2;
@@ -739,21 +740,33 @@
     });
   });
 
+  function relayoutDeck() {
+    layouts = layout();
+    L = layouts.peek;
+    sizeCards();
+    viewP = Math.max(0, Math.min(maxP, Math.round(viewP)));
+    render(viewP);
+  }
+
   let resizeT;
   window.addEventListener(
     "resize",
     () => {
       clearTimeout(resizeT);
-      resizeT = setTimeout(() => {
-        layouts = layout();
-        L = layouts.peek;
-        sizeCards();
-        viewP = Math.max(0, Math.min(maxP, Math.round(viewP)));
-        render(viewP);
-      }, 100);
+      resizeT = setTimeout(relayoutDeck, 100);
     },
     { passive: true }
   );
+
+  // After fonts settle, header metrics can change — keep cards under the bar
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      requestAnimationFrame(relayoutDeck);
+    });
+  }
+  window.addEventListener("load", () => {
+    requestAnimationFrame(relayoutDeck);
+  });
 
   sizeCards();
   gsap.set(panels, {
