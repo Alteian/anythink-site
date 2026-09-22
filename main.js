@@ -225,7 +225,10 @@
     panel,
     x: gsap.quickSetter(panel, "x", "px"),
     y: gsap.quickSetter(panel, "y", "px"),
-    s: gsap.quickSetter(panel, "scale"),
+    // Don't use quickSetter("scale") — GSAP can call setAttribute("scaleX,scaleY") and crash WebKit/Chromium
+    s: (v) => {
+      gsap.set(panel, { scale: v, force3D: true });
+    },
     o: gsap.quickSetter(panel, "opacity"),
     _pe: null,
     _lit: true,
