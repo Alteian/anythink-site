@@ -2,7 +2,7 @@
 
 > Softwarové studio / software studio based in the Czech Republic.
 > Custom software development, engineering capacity for teams, and shared product development.
-> House products are in private development (not public yet).
+> House products: Cerebrio (real-estate CRM) in development; hospitality and warehouse planned.
 
 ## Site
 
