@@ -482,14 +482,19 @@
 
   // Window-level touch (same as wheel): stage-only missed some targets,
   // and touch-action:pan-y let Safari/Chrome keep native vertical pan.
+  // FAQ/product buttons: allow deck swipe; only a tap (no drag) toggles them
+  let suppressControlClick = false;
+
   window.addEventListener(
     "touchstart",
     (e) => {
       if (e.touches.length !== 1) return;
-      // Only skip true controls — not whole FAQ/product cards (those need swipe)
+      suppressControlClick = false;
+      // Skip native links/fields, open FAQ answer (scroll), and detail-mode list
+      // — but NOT .faq-q / .product-row (those must pass swipe through)
       if (
         e.target.closest(
-          "a, button, input, textarea, summary, .nav-toggle, .faq-q, .faq-a, .faq-list.is-detail, .product-row"
+          "a, input, textarea, summary, .nav-toggle, .faq-a, .faq-list.is-detail"
         )
       ) {
         touch = null;
@@ -511,6 +516,7 @@
         t0: performance.now(),
         locked: false,
         axis: null,
+        fromControl: !!e.target.closest(".faq-q, .product-row, button"),
       };
     },
     { passive: true }
@@ -528,6 +534,7 @@
       if (!touch.locked) {
         if (Math.max(Math.abs(dx), Math.abs(dy)) < 10) return;
         touch.locked = true;
+        if (touch.fromControl) suppressControlClick = true;
         // One-card / phone: allow horizontal OR vertical page swipe
         touch.axis =
           document.documentElement.classList.contains("deck-one") &&
@@ -588,6 +595,11 @@
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
+          // Drag started on this control → it was a deck swipe, not a tap
+          if (suppressControlClick) {
+            suppressControlClick = false;
+            return;
+          }
           const panelId = btn.getAttribute("aria-controls");
           const panel = panelId ? document.getElementById(panelId) : null;
           const open = btn.getAttribute("aria-expanded") === "true";
