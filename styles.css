@@ -1473,6 +1473,10 @@ html.deck-one .deck-card {
   will-change: transform, opacity;
 }
 
+html.deck-one:not(.deck-morphing) .deck-card.is-active {
+  border-radius: 0;
+}
+
 html.deck-one:not(.deck-morphing) .deck-card.is-preview {
   visibility: hidden;
 }
