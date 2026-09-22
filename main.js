@@ -247,9 +247,18 @@
     snapDur: 0.48,
     snapEase: "power2.out",
     wheelThreshold: 40,
-    wheelCooldownMs: 420,
+    // Ignore wheel/swipe until unwrap finishes, then a short break so one flick ≠ two scenes
+    wheelCooldownMs: 450,
     touchCommit: 0.12,
   };
+
+  function deckBusy() {
+    return !!snapTween || performance.now() < wheelLockUntil;
+  }
+
+  function armDeckLock(ms) {
+    wheelLockUntil = Math.max(wheelLockUntil, performance.now() + ms);
+  }
 
   function applySlot(set, slot, z) {
     set.x(slot.x);
@@ -389,6 +398,7 @@
 
   function snapTo(target, duration = CFG.snapDur) {
     cancelSnap();
+    pendingDir = 0;
     target = Math.max(0, Math.min(maxP, Math.round(target)));
     if (Math.abs(target - viewP) < 1e-4) {
       viewP = target;
@@ -409,6 +419,8 @@
     const ease = fromHero ? "power3.out" : CFG.snapEase;
     const state = { p: viewP };
     setMorphing(true);
+    // Lock for the whole unwrap + post-snap break (no chained second scene)
+    armDeckLock(Math.round(dur * 1000) + CFG.wheelCooldownMs);
     snapTween = gsap.to(state, {
       p: target,
       duration: dur,
@@ -426,15 +438,9 @@
         setMorphing(false);
         commitHash();
         snapTween = null;
-        if (pendingDir) {
-          const dir = pendingDir;
-          pendingDir = 0;
-          const next = Math.round(viewP) + dir;
-          if (next >= 0 && next <= maxP) {
-            wheelLockUntil = performance.now() + CFG.wheelCooldownMs;
-            snapTo(next);
-          }
-        }
+        armDeckLock(CFG.wheelCooldownMs);
+        // Do not chain pendingDir — one gesture = one scene
+        pendingDir = 0;
       },
     });
   }
@@ -453,7 +459,7 @@
 
   let pendingDir = 0;
 
-  // Firm page snap: one gesture = one scene
+  // Firm page snap: one gesture = one scene (no mid-unwrap queue)
   window.addEventListener(
     "wheel",
     (e) => {
@@ -462,21 +468,12 @@
       e.preventDefault();
 
       if (Math.abs(dy) < CFG.wheelThreshold) return;
+      if (deckBusy()) return;
+
       const dir = dy > 0 ? 1 : -1;
-
-      // Mid-morph: queue at most one extra page (don't fight the tween)
-      if (snapTween) {
-        pendingDir = dir;
-        return;
-      }
-
-      const now = performance.now();
-      if (now < wheelLockUntil) return;
-
       const next = Math.round(viewP) + dir;
       if (next < 0 || next > maxP) return;
 
-      wheelLockUntil = now + CFG.wheelCooldownMs;
       pendingDir = 0;
       snapTo(next);
     },
@@ -498,8 +495,12 @@
         touch = null;
         return;
       }
+      // Same break as wheel: don't start a new swipe mid-unwrap / during cooldown
+      if (deckBusy()) {
+        touch = null;
+        return;
+      }
       const t = e.touches[0];
-      cancelSnap();
       pendingDir = 0;
       touch = {
         x0: t.clientX,
@@ -657,6 +658,18 @@
 
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") setMenuOpen(false);
+    const stepKeys =
+      e.key === "ArrowDown" ||
+      e.key === "PageDown" ||
+      e.key === "ArrowRight" ||
+      e.key === " " ||
+      e.key === "ArrowUp" ||
+      e.key === "PageUp" ||
+      e.key === "ArrowLeft";
+    if (stepKeys && deckBusy()) {
+      e.preventDefault();
+      return;
+    }
     if (
       e.key === "ArrowDown" ||
       e.key === "PageDown" ||
