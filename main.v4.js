@@ -262,7 +262,7 @@
     snapEase: "power2.out",
     wheelThreshold: 40,
     // Ignore wheel/swipe until unwrap finishes, then a short break so one flick ≠ two scenes
-    wheelCooldownMs: 450,
+    wheelCooldownMs: 280,
     touchCommit: 0.12,
   };
 
