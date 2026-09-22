@@ -132,28 +132,27 @@
       return { peek: full, full };
     }
 
-    // Larger main (~70%); peeks tuck under its right edge and may overlap each other
+    // Large main; wider peek column via tuck-under; peeks scale up and clip (not fit-full-height)
     const mainW = stageW * 0.7;
     const mainH = stageH;
-    const mainPeekOverlap = 28; // peeks slide under the main card a bit
-    const peekStackOverlap = Math.round((stageH - gap) * 0.08); // top peek over bottom
+    const mainPeekOverlap = 52; // peeks slide under the main card
+    const peekStackOverlap = Math.round(stageH * 0.22); // top peek clearly over bottom
     const peekLeft = padX + mainW - mainPeekOverlap;
-    const peekW = Math.max(120, vw - padX - peekLeft);
-    const peekH = (stageH - gap) / 2 + peekStackOverlap / 2;
+    const peekW = Math.max(160, vw - padX - peekLeft);
+    const peekBand = (stageH - gap) / 2;
 
-    // Fit the full main card into a peek cell without distorting
-    const nextS = Math.min(peekW / mainW, peekH / mainH);
-    const furtherS = nextS * 0.9;
+    // Scale from width (with a floor) — do NOT shrink to full card height
+    const nextS = Math.min(0.58, Math.max(0.42, (peekW / mainW) * 1.12));
+    const furtherS = nextS * 0.92;
 
     const nextLeft = peekLeft;
-    const nextTop = padY + (stageH - gap) / 2 + gap - peekStackOverlap;
+    const nextTop = padY + peekBand + gap - peekStackOverlap;
     const furtherLeft = peekLeft;
-    const furtherTop = padY; // same top inset as main
+    const furtherTop = padY;
 
     function place(cellLeft, cellTop, cellW, cellH, s, o, z) {
       const fittedW = mainW * s;
       return {
-        // Prefer right-align in the peek column so overlap with main reads clean
         x: cellLeft + Math.max(0, cellW - fittedW),
         y: cellTop,
         s,
@@ -166,8 +165,8 @@
       mainW,
       mainH,
       main: { x: padX, y: padY, s: 1, o: 1, z: 5 },
-      next: place(nextLeft, nextTop, peekW, peekH, nextS, 0.94, 4),
-      further: place(furtherLeft, furtherTop, peekW, peekH, furtherS, 0.82, 3),
+      next: place(nextLeft, nextTop, peekW, peekBand, nextS, 0.95, 4),
+      further: place(furtherLeft, furtherTop, peekW, peekBand, furtherS, 0.88, 3),
       enter: {
         x: vw + 40,
         y: furtherTop,
