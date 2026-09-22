@@ -1156,6 +1156,12 @@ html.deck-mode .site-footer {
   color: var(--muted);
 }
 
+.about-story {
+  margin-top: 1rem;
+  color: var(--grey);
+  max-width: 48ch;
+}
+
 .about-copy .answer + p,
 .about-copy p + p {
   margin-top: 1rem;
@@ -1724,47 +1730,145 @@ html.deck-mode .deck-card .product-item {
   padding: 0.55rem 0.7rem;
 }
 
-html.deck-mode .deck-card .timeline {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem 0.75rem;
-  margin: 0.5rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-html.deck-mode .deck-card .timeline-item {
-  padding: 0.35rem 0 0;
-  border-top: 1px solid var(--line);
-}
-
-html.deck-mode .deck-card .timeline-when {
-  font-size: 0.62rem;
-}
-
-html.deck-mode .deck-card .timeline-what {
-  font-size: 0.75rem;
-  margin: 0.15rem 0 0;
-}
-
-html.deck-mode .deck-card .founder-card {
-  margin: 0.4rem 0 0.55rem;
-  padding: 0.45rem 0.6rem;
-  gap: 0.55rem;
-}
-
-html.deck-mode .deck-card .facts {
-  gap: 0.35rem;
-}
-
-html.deck-mode .deck-card .facts div {
-  padding: 0.3rem 0;
+html.deck-mode .deck-card.scene--about .scene-content {
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow: hidden;
+  padding-top: clamp(0.85rem, 2vw, 1.35rem);
+  padding-bottom: clamp(0.85rem, 2vw, 1.25rem);
 }
 
 html.deck-mode .deck-card.scene--about .section-inner {
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 1rem;
-  align-items: start;
+  grid-template-columns: minmax(0, 1.35fr) minmax(12rem, 0.75fr);
+  gap: 1rem 1.25rem;
+  align-items: stretch;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+html.deck-mode .deck-card.scene--about .about-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+html.deck-mode .deck-card.scene--about .about-copy h2 {
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  margin: 0;
+}
+
+html.deck-mode .deck-card.scene--about .about-copy .answer {
+  font-size: clamp(0.82rem, 1.1vw, 0.95rem);
+  margin: 0;
+  max-width: 48ch;
+}
+
+html.deck-mode .deck-card.scene--about .about-story {
+  display: none;
+}
+
+html.deck-mode .deck-card .timeline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.35rem 0.55rem;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  flex: 0 0 auto;
+  max-width: none;
+}
+
+html.deck-mode .deck-card .timeline-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.45rem 0.4rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  border-top: 1px solid var(--line);
+  background: rgba(14, 15, 18, 0.55);
+  min-width: 0;
+}
+
+html.deck-mode .deck-card .timeline-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+html.deck-mode .deck-card .timeline-when {
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  padding-top: 0;
+}
+
+html.deck-mode .deck-card .timeline-what {
+  font-size: 0.72rem;
+  line-height: 1.3;
+  margin: 0;
+}
+
+html.deck-mode .deck-card .timeline-what strong {
+  font-size: 0.82rem;
+  margin-bottom: 0.1rem;
+}
+
+html.deck-mode .deck-card .founder-card {
+  margin: 0.15rem 0 0.1rem;
+  padding: 0;
+  gap: 0.65rem;
+  max-width: none;
+}
+
+html.deck-mode .deck-card .founder-mark {
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.05rem;
+}
+
+html.deck-mode .deck-card .founder-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.1rem;
+}
+
+html.deck-mode .deck-card .founder-role {
+  font-size: 0.62rem;
+}
+
+html.deck-mode .deck-card .about-aside {
+  padding: 0.35rem 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 0;
+  overflow: hidden;
+}
+
+html.deck-mode .deck-card .facts {
+  gap: 0.55rem;
+}
+
+html.deck-mode .deck-card .facts div {
+  padding: 0.35rem 0;
+  border-top: 1px solid var(--line);
+}
+
+html.deck-mode .deck-card .facts div:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+html.deck-mode .deck-card .facts dt {
+  font-size: 0.6rem;
+  margin-bottom: 0.2rem;
+}
+
+html.deck-mode .deck-card .facts dd {
+  font-size: 0.95rem;
 }
 
 html.deck-mode .deck-card.scene--hero h1,
@@ -1783,22 +1887,23 @@ html.deck-mode .deck-card.scene--hero .scene-content {
   padding-bottom: clamp(0.85rem, 2vw, 1.5rem);
 }
 
-/* Short viewports: drop secondary copy so the slot stays closed */
+/* Short viewports: keep all 5 timeline chips; drop only story copy */
 @media (max-height: 820px) {
-  html.deck-mode .deck-card.scene--about .about-copy > p:not(.answer):not(.eyebrow) {
-    display: none;
-  }
-  html.deck-mode .deck-card.scene--about .timeline-item:nth-child(n + 4) {
-    display: none;
-  }
   html.deck-mode .deck-card .section-lede {
     display: none;
   }
 }
 
-@media (max-height: 700px) {
-  html.deck-mode .deck-card.scene--about .timeline {
+@media (max-height: 640px) {
+  html.deck-mode .deck-card.scene--about .founder-card {
     display: none;
+  }
+  html.deck-mode .deck-card .timeline {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+  html.deck-mode .deck-card .timeline-what {
+    font-size: 0.65rem;
   }
 }
 
@@ -1816,7 +1921,9 @@ html.deck-one .deck-card .scene-content {
 
 html.deck-one .deck-card.scene--about .section-inner {
   grid-template-columns: 1fr;
-  gap: 0.75rem;
+  gap: 0.55rem;
+  height: auto;
+  max-height: 100%;
 }
 
 html.deck-one .deck-card.scene--about .about-aside {
@@ -1824,11 +1931,16 @@ html.deck-one .deck-card.scene--about .about-aside {
 }
 
 html.deck-one .deck-card .timeline {
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
 }
 
-html.deck-one .deck-card .timeline-item:nth-child(n + 3) {
-  display: none;
+html.deck-one .deck-card .timeline-item:nth-child(5) {
+  grid-column: 1 / -1;
+}
+
+html.deck-one .deck-card .timeline-item {
+  display: flex;
 }
 
 @media (max-width: 700px) {
