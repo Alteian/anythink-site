@@ -1460,10 +1460,9 @@ html.deck-mode .site-footer {
 }
 
 
-/* Phone deck: full-bleed depth stack (not desktop peeks squeezed) */
+/* Phone deck: full-bleed at rest; triangle peeks only while morphing */
 html.deck-one .scene-stage-root {
   overflow: hidden;
-  perspective: 1400px;
 }
 
 html.deck-one .deck-card {
@@ -1474,12 +1473,8 @@ html.deck-one .deck-card {
   will-change: transform, opacity;
 }
 
-html.deck-one .deck-card.is-preview {
-  filter: brightness(0.78) saturate(0.92);
-}
-
-html.deck-one.deck-morphing .deck-card.is-preview {
-  filter: brightness(0.88) saturate(0.96);
+html.deck-one:not(.deck-morphing) .deck-card.is-preview {
+  visibility: hidden;
 }
 
 html.deck-one .scene-chrome {
