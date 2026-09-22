@@ -1460,25 +1460,32 @@ html.deck-mode .site-footer {
 }
 
 
-/* Phone: full-bleed when parked; visible triangle peeks while morphing */
+/* Phone: full-vw cards; peeks visible only while morphing */
 html.deck-one .scene-stage-root {
   overflow: hidden;
 }
 
 html.deck-one .deck-card {
-  border-radius: 16px;
+  border-radius: 18px;
   box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.04);
+    0 22px 48px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 html.deck-one:not(.deck-morphing) .deck-card.is-active {
   border-radius: 0;
+  box-shadow: none;
 }
 
 html.deck-one:not(.deck-morphing) .deck-card.is-preview {
   visibility: hidden;
+  pointer-events: none;
+}
+
+html.deck-one.deck-morphing .deck-card.is-preview {
+  filter: brightness(0.82);
 }
 
 html.deck-one .scene-chrome {
