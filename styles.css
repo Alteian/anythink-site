@@ -1599,3 +1599,12 @@ html.deck-mode {
     width: 100%;
   }
 }
+
+
+.footer-legal {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--muted, #8a8a96);
+  opacity: 0.85;
+}
