@@ -108,10 +108,7 @@
 
     document.documentElement.classList.toggle("deck-one", oneCard);
 
-    // Narrow: one full card, R→L page flips (no peek stack)
-    if (oneCard) {
-      const mainW = stageW;
-      const mainH = stageH;
+    function fullSlots(mainW, mainH) {
       return {
         mainW,
         mainH,
@@ -121,6 +118,12 @@
         enter: { x: vw + 32 + stageW * 0.45, y: padY, s: 1, o: 0, z: 2 },
         exit: { x: -mainW - 32, y: padY, s: 1, o: 0, z: 1 },
       };
+    }
+
+    // Narrow: one full card, R→L page flips (no peek stack)
+    if (oneCard) {
+      const full = fullSlots(stageW, stageH);
+      return { peek: full, full };
     }
 
     const mainW = stageW * 0.62;
@@ -147,7 +150,7 @@
       };
     }
 
-    return {
+    const peek = {
       mainW,
       mainH,
       main: { x: padX, y: padY, s: 1, o: 1, z: 5 },
@@ -168,6 +171,8 @@
         z: 1,
       },
     };
+
+    return { peek, full: fullSlots(stageW, stageH) };
   }
 
   function slotName(panelIndex, pageIndex) {
@@ -202,7 +207,8 @@
     return Math.round(40 + ahead - Math.abs(panelIndex - p) * 15);
   }
 
-  let L = layout();
+  let layouts = layout();
+  let L = layouts.peek;
   const maxP = Math.max(0, panels.length - 1);
 
   const setters = panels.map((panel) => ({
@@ -214,6 +220,7 @@
     _pe: null,
     _lit: true,
     _z: null,
+    _w: null,
   }));
 
   function sizeCards() {
@@ -224,6 +231,9 @@
         transformOrigin: "0 0",
         force3D: true,
       });
+    });
+    setters.forEach((set) => {
+      set._w = L.mainW;
     });
   }
 
@@ -253,16 +263,31 @@
     }
   }
 
+  const navSceneLinks = gsap.utils.toArray(
+    ".nav a[href^='#'], #mobile-nav a[href^='#']"
+  );
+
   function syncChrome(p) {
     const clamped = Math.max(0, Math.min(maxP, p));
     const i = Math.round(clamped);
+    const id = panels[i]?.id || "";
     dots.forEach((d, n) => d.classList.toggle("is-active", n === i));
+    navSceneLinks.forEach((a) => {
+      const href = a.getAttribute("href") || "";
+      const hash = href.includes("#") ? href.slice(href.indexOf("#")) : "";
+      a.classList.toggle("is-active", hash === `#${id}`);
+    });
     if (progressEl && maxP > 0) {
       progressEl.style.width = `${(clamped / maxP) * 100}%`;
     }
     header?.classList.toggle("is-scrolled", clamped > 0.08);
+    document.documentElement.classList.toggle("deck-last", i === maxP);
     const label = document.querySelector("[data-scene-label]");
     if (label) label.textContent = `${i + 1} / ${panels.length}`;
+  }
+
+  function layForPage(pageIndex) {
+    return pageIndex >= maxP ? layouts.full : layouts.peek;
   }
 
   function render(p) {
@@ -277,7 +302,21 @@
     // While a snap is in flight, keep lerping even if float noise nudges p
     const forceMorph = !!snapTween && morphing;
 
+    const layFrom = layForPage(k);
+    const layTo = layForPage(k2);
+    let targetW = layFrom.mainW;
+    if (morphing || forceMorph) {
+      targetW = lerp(layFrom.mainW, layTo.mainW, t);
+    } else {
+      targetW = layFrom.mainW;
+    }
+    const targetH = layouts.peek.mainH;
+
     setters.forEach((set, i) => {
+      if (set._w !== targetW) {
+        gsap.set(set.panel, { width: targetW, height: targetH });
+        set._w = targetW;
+      }
       // Only cards near the active page can be on-stage
       const d0 = i - k;
       const d1 = i - k2;
@@ -290,8 +329,8 @@
         return;
       }
 
-      const from = L[slotName(i, k)];
-      const to = L[slotName(i, k2)];
+      const from = layFrom[slotName(i, k)];
+      const to = layTo[slotName(i, k2)];
       const slot = morphing || forceMorph ? lerpSlot(from, to, t) : from;
       applySlot(set, slot, stackZ(i, clamped));
 
@@ -642,7 +681,8 @@
     () => {
       clearTimeout(resizeT);
       resizeT = setTimeout(() => {
-        L = layout();
+        layouts = layout();
+        L = layouts.peek;
         sizeCards();
         viewP = Math.max(0, Math.min(maxP, Math.round(viewP)));
         render(viewP);
