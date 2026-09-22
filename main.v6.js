@@ -105,9 +105,9 @@
     );
     const oneCard = vw < 700;
     const gap = oneCard ? 8 : 14;
-    const padX = oneCard ? 10 : 20;
-    const padY = headerBottom + (oneCard ? 12 : 18);
-    const bottom = oneCard ? 36 : 28;
+    const padX = oneCard ? 8 : 20;
+    const padY = headerBottom + (oneCard ? 10 : 18);
+    const bottom = oneCard ? 32 : 28;
 
     const stageW = vw - padX * 2;
     const stageH = vh - padY - bottom;
@@ -118,18 +118,74 @@
       return {
         mainW,
         mainH,
-        main: { x: padX, y: padY, s: 1, o: 1, z: 5 },
-        next: { x: vw + 32, y: padY, s: 1, o: 0, z: 4 },
-        further: { x: vw + 32 + stageW * 0.2, y: padY, s: 1, o: 0, z: 3 },
-        enter: { x: vw + 32 + stageW * 0.45, y: padY, s: 1, o: 0, z: 2 },
-        exit: { x: -mainW - 32, y: padY, s: 1, o: 0, z: 1 },
+        main: { x: padX, y: padY, s: 1, o: 1, r: 0, z: 5 },
+        next: { x: vw + 32, y: padY, s: 1, o: 0, r: 0, z: 4 },
+        further: { x: vw + 32 + stageW * 0.2, y: padY, s: 1, o: 0, r: 0, z: 3 },
+        enter: { x: vw + 32 + stageW * 0.45, y: padY, s: 1, o: 0, r: 0, z: 2 },
+        exit: { x: -mainW - 32, y: padY, s: 1, o: 0, r: 0, z: 1 },
       };
     }
 
-    // Narrow: one full card, R→L page flips (no peek stack)
+    // Narrow: one full-bleed card with depth stack (scale/fade/rotate unwrap)
     if (oneCard) {
-      const full = fullSlots(stageW, stageH);
-      return { peek: full, full };
+      const mainW = stageW;
+      const mainH = stageH;
+      const depth = {
+        mainW,
+        mainH,
+        main: { x: padX, y: padY, s: 1, o: 1, r: 0, z: 5 },
+        // Next sits under/behind — visible edge of the stack, not off-screen R→L
+        next: {
+          x: padX + Math.round(stageW * 0.045),
+          y: padY + Math.round(stageH * 0.028),
+          s: 0.93,
+          o: 0.52,
+          r: 2.8,
+          z: 4,
+        },
+        further: {
+          x: padX + Math.round(stageW * 0.07),
+          y: padY + Math.round(stageH * 0.05),
+          s: 0.86,
+          o: 0.26,
+          r: 5,
+          z: 3,
+        },
+        enter: {
+          x: padX + Math.round(stageW * 0.09),
+          y: padY + Math.round(stageH * 0.075),
+          s: 0.8,
+          o: 0,
+          r: 7,
+          z: 2,
+        },
+        // Peel back-left while the under-card rises
+        exit: {
+          x: padX - Math.round(stageW * 0.38),
+          y: padY + Math.round(stageH * 0.02),
+          s: 0.9,
+          o: 0,
+          r: -6.5,
+          z: 1,
+        },
+      };
+      const end = {
+        mainW,
+        mainH,
+        main: { x: padX, y: padY, s: 1, o: 1, r: 0, z: 5 },
+        next: { x: padX, y: padY, s: 0.93, o: 0, r: 2.8, z: 4 },
+        further: { x: padX, y: padY, s: 0.86, o: 0, r: 5, z: 3 },
+        enter: { x: padX, y: padY, s: 0.8, o: 0, r: 7, z: 2 },
+        exit: {
+          x: padX - Math.round(stageW * 0.38),
+          y: padY + Math.round(stageH * 0.02),
+          s: 0.9,
+          o: 0,
+          r: -6.5,
+          z: 1,
+        },
+      };
+      return { peek: depth, full: end };
     }
 
     // Large main; wider peek column via tuck-under; peeks scale up and clip (not fit-full-height)
@@ -157,6 +213,7 @@
         y: cellTop,
         s,
         o,
+        r: 0,
         z,
       };
     }
@@ -164,7 +221,7 @@
     const peek = {
       mainW,
       mainH,
-      main: { x: padX, y: padY, s: 1, o: 1, z: 5 },
+      main: { x: padX, y: padY, s: 1, o: 1, r: 0, z: 5 },
       next: place(nextLeft, nextTop, peekW, peekBand, nextS, 0.95, 4),
       further: place(furtherLeft, furtherTop, peekW, peekBand, furtherS, 0.88, 3),
       enter: {
@@ -172,6 +229,7 @@
         y: furtherTop,
         s: furtherS,
         o: 0,
+        r: 0,
         z: 2,
       },
       exit: {
@@ -179,6 +237,7 @@
         y: padY,
         s: 1,
         o: 0,
+        r: 0,
         z: 1,
       },
     };
@@ -205,6 +264,7 @@
       y: lerp(from.y, to.y, t),
       s: lerp(from.s, to.s, t),
       o: lerp(from.o, to.o, t),
+      r: lerp(from.r || 0, to.r || 0, t),
       // z is assigned by stackZ  -  never lerp it (causes order pops)
       z: from.z,
     };
@@ -229,6 +289,9 @@
     // Don't use quickSetter("scale") — GSAP can call setAttribute("scaleX,scaleY") and crash WebKit/Chromium
     s: (v) => {
       gsap.set(panel, { scale: v, force3D: true });
+    },
+    r: (v) => {
+      gsap.set(panel, { rotation: v, force3D: true });
     },
     o: gsap.quickSetter(panel, "opacity"),
     _pe: null,
@@ -278,6 +341,7 @@
     set.x(slot.x);
     set.y(slot.y);
     set.s(slot.s);
+    set.r(slot.r || 0);
     set.o(slot.o);
     const zi = String(z);
     if (set._z !== zi) {
@@ -426,11 +490,22 @@
     const dist = Math.abs(target - viewP);
     // Hero handoff is heavier  -  slightly longer, softer ease avoids hitch
     const fromHero = Math.round(viewP) === 0 || target === 0;
+    const one = document.documentElement.classList.contains("deck-one");
     const dur = Math.max(
-      fromHero ? 0.42 : 0.3,
-      Math.min(duration, (fromHero ? 0.34 : 0.22) + dist * 0.28)
+      one ? (fromHero ? 0.36 : 0.28) : fromHero ? 0.42 : 0.3,
+      Math.min(
+        duration,
+        (one ? (fromHero ? 0.3 : 0.2) : fromHero ? 0.34 : 0.22) + dist * (one ? 0.22 : 0.28)
+      )
     );
-    const ease = fromHero ? "power3.out" : CFG.snapEase;
+    // Phone: expo-ish out for a short haptic settle; desktop keeps power2/3
+    const ease = one
+      ? fromHero
+        ? "power3.out"
+        : "power4.out"
+      : fromHero
+        ? "power3.out"
+        : CFG.snapEase;
     const state = { p: viewP };
     setMorphing(true);
     // Lock for the whole unwrap + post-snap break (no chained second scene)

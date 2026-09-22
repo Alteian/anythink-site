@@ -1459,6 +1459,44 @@ html.deck-mode .site-footer {
   }
 }
 
+
+/* Phone deck: full-bleed depth stack (not desktop peeks squeezed) */
+html.deck-one .scene-stage-root {
+  overflow: hidden;
+  perspective: 1400px;
+}
+
+html.deck-one .deck-card {
+  border-radius: 16px;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  will-change: transform, opacity;
+}
+
+html.deck-one .deck-card.is-preview {
+  filter: brightness(0.78) saturate(0.92);
+}
+
+html.deck-one.deck-morphing .deck-card.is-preview {
+  filter: brightness(0.88) saturate(0.96);
+}
+
+html.deck-one .scene-chrome {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
+
+html.deck-one .scene-dots {
+  gap: 0.45rem;
+  bottom: 10px;
+}
+
+html.deck-one .scene-dots a {
+  width: 7px;
+  height: 7px;
+}
+
 /* Phone FAQ: list → full-card detail, no swipe fights */
 html.deck-one #faq .scene-content,
 html.deck-one .deck-card#faq .scene-content {
