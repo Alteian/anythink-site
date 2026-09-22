@@ -2225,3 +2225,19 @@ html.deck-one .stack-chips li {
   font-size: 0.72rem;
   padding: 0.28rem 0.58rem;
 }
+
+
+/* Keep stack visible inside clipped deck cards */
+html.deck-mode .deck-card#services .stack-block {
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+}
+html.deck-mode .deck-card#services .stack-block .answer {
+  display: none; /* chips only on deck — copy is in schema/llms */
+}
+html.deck-mode .deck-card#services .stack-chips {
+  margin-top: 0.35rem;
+}
+html.deck-mode .deck-card#services .service-list {
+  margin-top: 0.7rem;
+}
