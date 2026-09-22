@@ -758,17 +758,6 @@
     { passive: true }
   );
 
-  // After fonts settle, header metrics can change — keep cards under the bar
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => {
-      requestAnimationFrame(relayoutDeck);
-    });
-  }
-  window.addEventListener("load", () => {
-    requestAnimationFrame(relayoutDeck);
-  });
-
-  sizeCards();
   gsap.set(panels, {
     x: 0,
     y: 0,
@@ -783,21 +772,38 @@
   if (start < 0) start = 0;
   viewP = start;
   lastClassI = -1;
-  render(viewP);
-  commitHash();
-  panels.forEach((p, i) => {
-    p.classList.add("is-ready");
-    p.classList.toggle("is-active", i === start);
-    p.classList.toggle("is-preview", i !== start);
-  });
-  lastClassI = start;
-  document.querySelectorAll(".reveal").forEach((el) => {
-    el.classList.add("is-visible");
-  });
-  // Reveal after layout + paint so content isn't outside the box
-  requestAnimationFrame(() => {
-    requestAnimationFrame(markReady);
-  });
+
+  // Hold the stage hidden until fonts → measure header → layout → paint.
+  // Avoids #about refresh flashing under the bar, then jumping.
+  function bootDeck() {
+    layouts = layout();
+    L = layouts.peek;
+    sizeCards();
+    render(viewP);
+    commitHash();
+    panels.forEach((p, i) => {
+      p.classList.add("is-ready");
+      p.classList.toggle("is-active", i === start);
+      p.classList.toggle("is-preview", i !== start);
+    });
+    lastClassI = start;
+    document.querySelectorAll(".reveal").forEach((el) => {
+      el.classList.add("is-visible");
+    });
+    markReady();
+  }
+
+  const fontsReady =
+    document.fonts && document.fonts.ready
+      ? document.fonts.ready
+      : Promise.resolve();
+  fontsReady
+    .catch(() => {})
+    .then(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(bootDeck);
+      });
+    });
 
   syncLangSwitchHash();
   window.addEventListener("hashchange", syncLangSwitchHash);
