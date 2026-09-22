@@ -1480,8 +1480,9 @@ html.deck-one:not(.deck-morphing) .deck-card.is-active {
 }
 
 html.deck-one:not(.deck-morphing) .deck-card.is-preview {
-  visibility: hidden;
-  pointer-events: none;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 html.deck-one.deck-morphing .deck-card.is-preview {
