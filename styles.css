@@ -2189,3 +2189,39 @@ html.deck-mode {
   pointer-events: none;
   opacity: 0.85;
 }
+
+
+/* Public tech stack (services scene) */
+.stack-block {
+  margin-top: 1.35rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.stack-block h3 {
+  margin: 0.15rem 0 0.45rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.stack-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+}
+.stack-chips li {
+  margin: 0;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(214, 220, 230, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: rgba(230, 234, 240, 0.92);
+}
+html.deck-one .stack-chips li {
+  font-size: 0.72rem;
+  padding: 0.28rem 0.58rem;
+}

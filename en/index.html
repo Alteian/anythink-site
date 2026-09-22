@@ -89,8 +89,11 @@
           {
             "@type": "Organization",
             "@id": "https://anythink.cz/#organization",
-            "name": "anythink s.r.o.",
-            "alternateName": "anythink",
+            "name": "anythink",
+            "alternateName": [
+              "anythink",
+              "Anythink Software Studio"
+            ],
             "url": "https://anythink.cz/",
             "logo": {
               "@type": "ImageObject",
@@ -99,33 +102,60 @@
               "height": 512
             },
             "sameAs": [
-              "https://github.com/Alteian",
+              "https://github.com/AnythinkLabs",
+              "https://www.linkedin.com/company/anthnk",
               "https://amphoda.com/"
             ],
             "dateModified": "2026-09-22",
             "email": "david@anythink.cz",
-            "description": "Software studio: custom development, engineering capacity for teams, and shared product development. House products in private development.",
+            "description": "Software studio: custom development, engineering capacity for teams, and shared product development. Based in Prague and surrounding area; projects nationwide in CZ. House products in development.",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Žižkova 411",
               "addressLocality": "Šestajovice",
+              "postalCode": "250 92",
               "addressCountry": "CZ"
             },
-            "areaServed": {
-              "@type": "Country",
-              "name": "Czech Republic"
+            "areaServed": [
+              {
+                "@type": "AdministrativeArea",
+                "name": "Praha"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Praha-východ"
+              },
+              {
+                "@type": "Country",
+                "name": "Czech Republic"
+              }
+            ],
+            "founder": {
+              "@id": "https://anythink.cz/#david"
             },
-            "founder": { "@id": "https://anythink.cz/#david" },
             "knowsAbout": [
-              "vývoj softwaru na míru",
-              "softwarové studio",
-              "kapacita vývojářů",
-              "produktový vývoj",
               "custom software development",
               "product engineering",
               "team augmentation",
-              "web and API development"
-            ]
+              "web and API development",
+              "cloud architecture",
+              "TypeScript",
+              "Rust",
+              "Python",
+              "Go",
+              "AWS",
+              "Docker",
+              "PostgreSQL",
+              "Svelte",
+              "real estate software",
+              "Cerebrio",
+              "vývoj softwaru na míru",
+              "softwarové studio",
+              "produktový vývoj"
+            ],
+            "legalName": "Anythink s.r.o.",
+            "taxID": "23498358",
+            "vatID": "CZ23498358"
           },
           {
             "@type": "Person",
@@ -135,9 +165,12 @@
             "email": "david@anythink.cz",
             "telephone": "+420725993936",
             "sameAs": [
+              "https://www.linkedin.com/in/david-roucka",
               "https://github.com/Alteian"
             ],
-            "worksFor": { "@id": "https://anythink.cz/#organization" },
+            "worksFor": {
+              "@id": "https://anythink.cz/#organization"
+            },
             "description": "Founder and CEO of anythink s.r.o. Path from hospitality (waiter, bartender, manager) through intensive self-taught programming during Covid to product engineering and founding the studio."
           },
           {
@@ -145,7 +178,8 @@
             "@id": "https://anythink.cz/#business",
             "name": "anythink s.r.o.",
             "sameAs": [
-              "https://github.com/Alteian",
+              "https://github.com/AnythinkLabs",
+              "https://www.linkedin.com/company/anthnk",
               "https://amphoda.com/"
             ],
             "url": "https://anythink.cz/en/",
@@ -156,21 +190,40 @@
               "@type": "PostalAddress",
               "streetAddress": "Žižkova 411",
               "addressLocality": "Šestajovice",
+              "postalCode": "250 92",
               "addressCountry": "CZ"
             },
             "geo": {
               "@type": "GeoCoordinates",
               "latitude": 50.1167,
               "longitude": 14.6833
-            }
+            },
+            "areaServed": [
+              {
+                "@type": "AdministrativeArea",
+                "name": "Praha"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "Praha-východ"
+              },
+              {
+                "@type": "Country",
+                "name": "Czech Republic"
+              }
+            ]
           },
           {
             "@type": "WebPage",
             "@id": "https://anythink.cz/en/#webpage",
             "url": "https://anythink.cz/en/",
             "name": "anythink – software studio",
-            "isPartOf": { "@id": "https://anythink.cz/#website" },
-            "about": { "@id": "https://anythink.cz/#organization" },
+            "isPartOf": {
+              "@id": "https://anythink.cz/#website"
+            },
+            "about": {
+              "@id": "https://anythink.cz/#organization"
+            },
             "inLanguage": "en",
             "dateModified": "2026-09-22",
             "primaryImageOfPage": {
@@ -185,8 +238,13 @@
             "@id": "https://anythink.cz/#website",
             "url": "https://anythink.cz/",
             "name": "anythink",
-            "inLanguage": ["cs", "en"],
-            "publisher": { "@id": "https://anythink.cz/#organization" }
+            "inLanguage": [
+              "cs",
+              "en"
+            ],
+            "publisher": {
+              "@id": "https://anythink.cz/#organization"
+            }
           },
           {
             "@type": "FAQPage",
@@ -302,7 +360,7 @@
           <p class="brand reveal">anythink</p>
           <h1 class="reveal delay-1">Software studio</h1>
           <p class="lede reveal delay-2">
-            anythink is a software studio in Prague. It does custom development, engineering capacity for teams, and shared product work. It takes projects across the Czech Republic.
+            Software studio. Based in Prague and the surrounding area. Projects nationwide across the Czech Republic. Custom development, engineering capacity for teams, and shared product work.
           </p>
           <div class="cta-row reveal delay-3">
             <a class="btn btn-primary" href="mailto:david@anythink.cz">Email us</a>
@@ -359,6 +417,24 @@
                 </div>
               </li>
             </ul>
+
+            <div class="stack-block reveal" id="stack">
+              <p class="eyebrow">Stack</p>
+              <h3>Technologies</h3>
+              <p class="answer">
+                Tools we use day to day and are willing to name publicly. No client case studies, and no Flutter.
+              </p>
+              <ul class="stack-chips">
+                <li>TypeScript</li>
+                <li>Rust</li>
+                <li>Python</li>
+                <li>Go</li>
+                <li>AWS</li>
+                <li>Docker</li>
+                <li>PostgreSQL</li>
+                <li>Svelte</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
