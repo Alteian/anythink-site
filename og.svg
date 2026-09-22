@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#050506"/>
+  <rect x="0" y="0" width="1200" height="630" fill="url(#g)" opacity="0.9"/>
+  <defs>
+    <linearGradient id="g" x1="200" y1="80" x2="1000" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1a1c22"/>
+      <stop offset="0.55" stop-color="#050506"/>
+      <stop offset="1" stop-color="#12141a"/>
+    </linearGradient>
+  </defs>
+  <text x="96" y="320" fill="#F7F8FA" font-family="Syne, Arial, sans-serif" font-size="120" font-weight="800" letter-spacing="-6">anythink</text>
+  <text x="100" y="390" fill="#8A909B" font-family="Outfit, Arial, sans-serif" font-size="32">software studio · anythink.cz</text>
+</svg>

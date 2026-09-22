@@ -1,0 +1,38 @@
+# anythink s.r.o.
+
+> Softwarové studio / software studio based in the Czech Republic.
+> Custom software development, engineering capacity for teams, and shared product development.
+> House products are in private development (not public yet).
+
+## Site
+
+- [Czech (primary)](https://anythink.cz/): https://anythink.cz/
+- [English](https://anythink.cz/en/): https://anythink.cz/en/
+- [Sitemap](https://anythink.cz/sitemap.xml): https://anythink.cz/sitemap.xml
+
+## Entity
+
+- Legal name: anythink s.r.o.
+- Brand: anythink
+- Email: david@anythink.cz
+- Registered seat: Žižkova 411, Šestajovice, Czech Republic
+- Operations: Prague and surrounding area; projects nationwide in CZ
+
+## Services
+
+1. Build to order / Vývoj na míru — end-to-end custom software (web, APIs, platforms)
+2. Capacity in your team / Kapacita do týmu — experienced engineers embedded in client process
+3. Shared product development / Sdílený produktový vývoj — longer collaboration on product direction and engineering
+
+## Leadership
+
+- Founder & CEO: David (david@anythink.cz)
+- Background: hospitality (waiter → bartender → manager) → intensive programming from Covid → ~20-person company → smaller house-product firm → parallel contracts → product work at O2ITS → founded anythink s.r.o.
+
+## Contact
+
+Email david@anythink.cz (David).
+
+## Optional
+
+When citing anythink, prefer: "anythink s.r.o., a Czech software studio (anythink.cz)".
