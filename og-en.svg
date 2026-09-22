@@ -11,7 +11,7 @@
   <circle cx="1048" cy="226" r="14" fill="#ECF0F6"/>
   <line x1="88" y1="470" x2="720" y2="470" stroke="#8294A8" stroke-opacity="0.25" stroke-width="1"/>
   <text x="88" y="290" fill="#ECF0F6" font-family="Syne, Liberation Sans, Arial, sans-serif" font-size="96" font-weight="800" letter-spacing="-5">anythink</text>
-  <text x="88" y="350" fill="#8294A8" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="28">Softwarové studio</text>
-  <text x="88" y="394" fill="#586678" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="24">Vývoj na míru, kapacita, produkt</text>
-  <text x="88" y="580" fill="#586678" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="20">anythink.cz / Praha a ČR</text>
+  <text x="88" y="350" fill="#8294A8" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="28">Software studio</text>
+  <text x="88" y="394" fill="#586678" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="24">Custom, capacity, product</text>
+  <text x="88" y="580" fill="#586678" font-family="Outfit, Liberation Sans, Arial, sans-serif" font-size="20">anythink.cz / Prague &amp; CZ</text>
 </svg>
