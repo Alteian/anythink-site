@@ -774,8 +774,11 @@
   lastClassI = -1;
 
   // Hold the stage hidden until fonts → measure header → layout → paint.
-  // Avoids #about refresh flashing under the bar, then jumping.
+  // Safari: fonts.ready can hang — race a short timeout so we never stay blank.
+  let booted = false;
   function bootDeck() {
+    if (booted) return;
+    booted = true;
     layouts = layout();
     L = layouts.peek;
     sizeCards();
@@ -793,17 +796,20 @@
     markReady();
   }
 
+  function scheduleBoot() {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(bootDeck);
+    });
+  }
+
   const fontsReady =
     document.fonts && document.fonts.ready
-      ? document.fonts.ready
+      ? document.fonts.ready.catch(() => {})
       : Promise.resolve();
-  fontsReady
-    .catch(() => {})
-    .then(() => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(bootDeck);
-      });
-    });
+  const fontsTimeout = new Promise((resolve) => {
+    setTimeout(resolve, 300);
+  });
+  Promise.race([fontsReady, fontsTimeout]).then(scheduleBoot);
 
   syncLangSwitchHash();
   window.addEventListener("hashchange", syncLangSwitchHash);
