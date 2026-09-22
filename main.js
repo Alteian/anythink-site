@@ -96,10 +96,15 @@
   function layout() {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const headerH = 64;
+    const headerEl = document.querySelector(".site-header");
+    const headerH = Math.max(
+      64,
+      Math.ceil(headerEl?.getBoundingClientRect().height || 64)
+    );
     const oneCard = vw < 700;
     const gap = oneCard ? 8 : 14;
     const padX = oneCard ? 10 : 20;
+    // Same top inset for main + peek stack (never under the nav)
     const padY = headerH + (oneCard ? 8 : 14);
     const bottom = oneCard ? 36 : 28;
 
@@ -138,12 +143,16 @@
     const nextLeft = padX + mainW + gap;
     const nextTop = padY + peekH + gap;
     const furtherLeft = padX + mainW + gap;
-    const furtherTop = padY;
+    const furtherTop = padY; // same top inset as main
 
     function place(cellLeft, cellTop, cellW, cellH, s, o, z) {
+      const fittedW = mainW * s;
+      const fittedH = mainH * s;
       return {
-        x: cellLeft + (cellW - mainW * s) / 2,
-        y: cellTop + (cellH - mainH * s) / 2,
+        x: cellLeft + Math.max(0, (cellW - fittedW) / 2),
+        // Top-align with the cell (further cell starts at padY = main top).
+        // Never let oversized fits climb under the header.
+        y: cellTop,
         s,
         o,
         z,
@@ -158,7 +167,7 @@
       further: place(furtherLeft, furtherTop, peekW, peekH, furtherS, 0.78, 3),
       enter: {
         x: vw + 40,
-        y: furtherTop + (peekH - mainH * furtherS) / 2,
+        y: furtherTop,
         s: furtherS,
         o: 0,
         z: 2,
