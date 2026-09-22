@@ -763,8 +763,6 @@
     y: 0,
     opacity: 0,
     scale: 1,
-    scaleX: 1,
-    scaleY: 1,
     force3D: true,
   });
 
@@ -779,21 +777,26 @@
   function bootDeck() {
     if (booted) return;
     booted = true;
-    layouts = layout();
-    L = layouts.peek;
-    sizeCards();
-    render(viewP);
-    commitHash();
-    panels.forEach((p, i) => {
-      p.classList.add("is-ready");
-      p.classList.toggle("is-active", i === start);
-      p.classList.toggle("is-preview", i !== start);
-    });
-    lastClassI = start;
-    document.querySelectorAll(".reveal").forEach((el) => {
-      el.classList.add("is-visible");
-    });
-    markReady();
+    try {
+      layouts = layout();
+      L = layouts.peek;
+      sizeCards();
+      render(viewP);
+      commitHash();
+      panels.forEach((p, i) => {
+        p.classList.add("is-ready");
+        p.classList.toggle("is-active", i === start);
+        p.classList.toggle("is-preview", i !== start);
+      });
+      lastClassI = start;
+      document.querySelectorAll(".reveal").forEach((el) => {
+        el.classList.add("is-visible");
+      });
+    } catch (err) {
+      console.error("deck boot failed", err);
+    } finally {
+      markReady();
+    }
   }
 
   function scheduleBoot() {
