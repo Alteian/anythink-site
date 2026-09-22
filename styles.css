@@ -106,7 +106,25 @@ p {
   border: 0;
 }
 
+/* Boot: hide stage until first deck layout (avoids FOUC outside the box) */
+html.js:not(.is-ready) .scene-stage-root,
+html.js:not(.is-ready) .scene-dots,
+html.js:not(.is-ready) .scene-chrome,
+html.js:not(.is-ready) .progress {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+html.js.is-ready .scene-stage-root,
+html.js.is-ready .scene-dots,
+html.js.is-ready .scene-chrome,
+html.js.is-ready .progress {
+  opacity: 1;
+  transition: opacity 0.45s var(--ease);
+}
+
 /* Atmosphere */
+
 
 .noise {
   pointer-events: none;
@@ -345,7 +363,8 @@ p {
   height: 100%;
   height: 100dvh;
   overflow: hidden;
-  touch-action: pan-y;
+  /* Deck owns vertical swipe; pan-y let mobile browsers steal the gesture */
+  touch-action: none;
   background:
     radial-gradient(ellipse 70% 50% at 78% 18%, rgba(170, 178, 190, 0.09), transparent 58%),
     radial-gradient(ellipse 50% 40% at 12% 78%, rgba(90, 98, 112, 0.12), transparent 55%),
@@ -369,6 +388,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
+  touch-action: none;
   margin: 0;
   padding: 0;
   border: 1px solid var(--line-strong);
@@ -389,7 +409,7 @@ p {
 }
 
 .deck-card.is-ready {
-  opacity: 1;
+  /* marker only — GSAP owns opacity after first render */
 }
 
 .deck-card.is-active {
@@ -955,6 +975,16 @@ html.deck-mode .site-footer {
   max-width: 52ch;
 }
 
+.capability-line {
+  font-family: var(--font-mono);
+  font-size: clamp(0.78rem, 1.3vw, 0.88rem);
+  letter-spacing: 0.02em;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 48ch;
+  text-transform: lowercase;
+}
+
 @media (min-width: 760px) {
   .service-item {
     grid-template-columns: 4.5rem 1fr;
@@ -1215,47 +1245,165 @@ html.deck-mode .site-footer {
   border-bottom: 1px solid var(--line);
 }
 
-.faq-item summary {
-  list-style: none;
+.faq-q {
+  width: 100%;
+  appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.25rem 0;
+  padding: 1.15rem 0;
+  text-align: left;
   font-family: var(--font-display);
   font-weight: 650;
-  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  font-size: clamp(1.02rem, 2vw, 1.18rem);
   letter-spacing: -0.025em;
   color: var(--bright);
   transition: color 0.25s var(--ease);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.faq-item summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq-item summary::after {
+.faq-q::after {
   content: "+";
+  flex: 0 0 auto;
   font-family: var(--font-mono);
   font-weight: 400;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  line-height: 1;
   color: var(--muted);
-  transition: transform 0.3s var(--ease);
+  transition: transform 0.25s var(--ease);
 }
 
-.faq-item[open] summary::after {
-  transform: rotate(45deg);
-}
-
-.faq-item summary:hover {
+.faq-q[aria-expanded="true"] {
   color: var(--ink);
 }
 
-.faq-item p {
-  padding: 0 0 1.35rem;
+.faq-q[aria-expanded="true"]::after {
+  transform: rotate(45deg);
+}
+
+.faq-q:hover {
+  color: var(--ink);
+}
+
+.faq-a {
+  padding: 0 0 1.15rem;
+}
+
+.faq-a p {
+  margin: 0;
   color: var(--grey);
   max-width: 52ch;
+  font-size: clamp(0.92rem, 1.6vw, 1.02rem);
+  line-height: 1.45;
+}
+
+@media (max-width: 700px) {
+  html.deck-mode #faq .scene-content,
+  html.deck-one #faq .scene-content {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    justify-content: flex-start;
+  }
+
+  .faq-q {
+    min-height: 3rem;
+    padding: 1rem 0.1rem;
+    font-size: 1.05rem;
+  }
+}
+
+/* Product list → detail */
+.product-list {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  max-width: 40rem;
+}
+
+.product-item {
+  border-top: 1px solid var(--line);
+}
+
+.product-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.product-row {
+  width: 100%;
+  appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  touch-action: manipulation;
+}
+
+.product-row.is-static {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.product-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.product-tagline {
+  font-size: clamp(0.88rem, 1.4vw, 0.98rem);
+  line-height: 1.35;
+  color: var(--grey);
+  font-weight: 450;
+}
+
+.product-name {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  letter-spacing: -0.03em;
+  color: var(--bright);
+}
+
+.product-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.product-detail {
+  padding: 0 0 1.15rem;
+}
+
+.product-detail p {
+  margin: 0;
+  max-width: 42ch;
+  color: var(--grey);
+  font-size: clamp(0.92rem, 1.5vw, 1.02rem);
+  line-height: 1.45;
+}
+
+.product-row[aria-expanded="true"] .product-name {
+  color: var(--ink);
 }
 
 /* Contact */
@@ -1471,9 +1619,6 @@ html.deck-mode .deck-card.scene--hero .scene-content {
   html.deck-mode .deck-card.scene--about .timeline {
     display: none;
   }
-  html.deck-mode .deck-card .faq-item p {
-    display: none; /* summaries only when very short */
-  }
 }
 
 /* One-card mode (<700px): full bleed card, no peek chrome */
@@ -1606,5 +1751,11 @@ html.deck-mode {
   font-size: 0.72rem;
   letter-spacing: 0.02em;
   color: var(--muted, #8a8a96);
+  opacity: 0.85;
+}
+
+
+.contact-actions a.is-copied {
+  pointer-events: none;
   opacity: 0.85;
 }

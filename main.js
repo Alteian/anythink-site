@@ -9,6 +9,7 @@
 
   if (typeof gsap === "undefined") {
     console.error("GSAP failed to load");
+    document.documentElement.classList.add("is-ready");
     return;
   }
 
@@ -45,13 +46,21 @@
     a.addEventListener("click", () => setMenuOpen(false))
   );
 
+  function markReady() {
+    document.documentElement.classList.add("is-ready");
+  }
+
   if (reduceMotion) {
     // Native document scroll - no hijacked deck
     document.documentElement.classList.remove("deck-mode");
+    markReady();
     return;
   }
 
-  if (!panels.length) return;
+  if (!panels.length) {
+    markReady();
+    return;
+  }
 
   document.documentElement.classList.add("deck-mode");
   stage?.classList.add("scene-stage-root");
@@ -217,7 +226,7 @@
     snapEase: "power2.out",
     wheelThreshold: 40,
     wheelCooldownMs: 420,
-    touchCommit: 0.18,
+    touchCommit: 0.12,
   };
 
   function applySlot(set, slot, z) {
@@ -422,30 +431,46 @@
     { passive: false }
   );
 
-  stage?.addEventListener(
+  // Window-level touch (same as wheel): stage-only missed some targets,
+  // and touch-action:pan-y let Safari/Chrome keep native vertical pan.
+  window.addEventListener(
     "touchstart",
     (e) => {
+      if (e.touches.length !== 1) return;
+      // Let real controls keep native tap; deck still owns the page swipe
+      if (
+        e.target.closest(
+          "a, button, input, textarea, summary, .nav-toggle, [data-faq], [data-product-list], .faq-q, .faq-a, .product-row, .product-detail"
+        )
+      ) {
+        touch = null;
+        return;
+      }
       const t = e.touches[0];
       cancelSnap();
+      pendingDir = 0;
       touch = {
         y0: t.clientY,
         p0: Math.round(viewP),
         y: t.clientY,
+        t0: performance.now(),
+        locked: false,
       };
     },
     { passive: true }
   );
 
-  stage?.addEventListener(
+  window.addEventListener(
     "touchmove",
     (e) => {
-      if (!touch) return;
+      if (!touch || e.touches.length !== 1) return;
       const t = e.touches[0];
       const dy = touch.y0 - t.clientY;
 
-      if (canInnerScroll(touch.y - t.clientY)) {
-        touch = null;
-        return;
+      // Axis lock after small slop so taps don't drag
+      if (!touch.locked) {
+        if (Math.abs(dy) < 10) return;
+        touch.locked = true;
       }
 
       e.preventDefault();
@@ -457,19 +482,96 @@
     { passive: false }
   );
 
-  stage?.addEventListener(
-    "touchend",
-    () => {
-      if (!touch) return;
-      const delta = viewP - touch.p0;
-      let target = touch.p0;
-      if (delta > CFG.touchCommit) target = touch.p0 + 1;
-      else if (delta < -CFG.touchCommit) target = touch.p0 - 1;
-      touch = null;
-      snapTo(target);
-    },
-    { passive: true }
-  );
+  function endTouch() {
+    if (!touch) return;
+    const delta = viewP - touch.p0;
+    const dt = Math.max(16, performance.now() - touch.t0) / 1000;
+    const vel = delta / dt; // pages per second
+    let target = touch.p0;
+    // Distance or flick — same firm one-page snap as wheel
+    if (delta > CFG.touchCommit || vel > 0.85) target = touch.p0 + 1;
+    else if (delta < -CFG.touchCommit || vel < -0.85) target = touch.p0 - 1;
+    touch = null;
+    snapTo(target);
+  }
+
+  window.addEventListener("touchend", endTouch, { passive: true });
+  window.addEventListener("touchcancel", endTouch, { passive: true });
+
+
+
+  // FAQ + product list expand (buttons; details fought deck swipe on phones)
+  function bindExpandList(rootSel, btnSel, openExclusive) {
+    document.querySelectorAll(rootSel).forEach((list) => {
+      list.querySelectorAll(btnSel).forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const panelId = btn.getAttribute("aria-controls");
+          const panel = panelId ? document.getElementById(panelId) : null;
+          const open = btn.getAttribute("aria-expanded") === "true";
+          if (openExclusive) {
+            list.querySelectorAll(btnSel).forEach((other) => {
+              if (other === btn) return;
+              other.setAttribute("aria-expanded", "false");
+              const oid = other.getAttribute("aria-controls");
+              const op = oid ? document.getElementById(oid) : null;
+              if (op) op.hidden = true;
+            });
+          }
+          btn.setAttribute("aria-expanded", open ? "false" : "true");
+          if (panel) panel.hidden = open;
+        });
+      });
+    });
+  }
+  bindExpandList("[data-faq]", ".faq-q", true);
+  bindExpandList("[data-product-list]", ".product-row[aria-controls]", true);
+
+  // Desktop: copy phone/email. Mobile: keep native tel:/mailto:
+  function preferCopyContact() {
+    return window.matchMedia("(min-width: 700px)").matches;
+  }
+
+  function flashCopied(el) {
+    const prev = el.textContent;
+    const cs = document.documentElement.lang === "cs";
+    el.classList.add("is-copied");
+    el.textContent = cs ? "Zkopírováno" : "Copied";
+    window.setTimeout(() => {
+      el.textContent = prev;
+      el.classList.remove("is-copied");
+    }, 1200);
+  }
+
+  document.querySelectorAll("[data-copy]").forEach((el) => {
+    el.addEventListener("click", async (e) => {
+      if (!preferCopyContact()) return;
+      e.preventDefault();
+      const value = (el.getAttribute("data-copy") || "").trim();
+      if (!value) return;
+      try {
+        await navigator.clipboard.writeText(value);
+        flashCopied(el);
+      } catch (_) {
+        // Fallback for older desktop browsers
+        const ta = document.createElement("textarea");
+        ta.value = value;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          flashCopied(el);
+        } finally {
+          ta.remove();
+        }
+      }
+    });
+  });
+
 
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") setMenuOpen(false);
@@ -561,6 +663,10 @@
   lastClassI = start;
   document.querySelectorAll(".reveal").forEach((el) => {
     el.classList.add("is-visible");
+  });
+  // Reveal after layout + paint so content isn't outside the box
+  requestAnimationFrame(() => {
+    requestAnimationFrame(markReady);
   });
 
   window.__anythinkDeck = {

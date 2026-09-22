@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="cs">
   <head>
+    <script>document.documentElement.classList.add("js");</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>anythink · softwarové studio | vývoj na míru, Praha</title>
@@ -174,7 +175,7 @@
                 "name": "Kdo vede anythink?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "anythink zakládá a vede David · Founder a CEO. Začínal v gastronomii (číšník, bartender, manažer), během Covidu přešel do IT a programování a prošel produktovým vývojem včetně O2ITS, než založil anythink s.r.o."
+                  "text": "anythink zakládá a vede David Roučka."
                 }
               },
               {
@@ -203,10 +204,10 @@
               },
               {
                 "@type": "Question",
-                "name": "Jsou vlastní produkty anythink veřejné?",
+                "name": "Co anythink vyvíjí?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Ne. Vlastní produkty jsou ve vývoji a zatím nejsou veřejně dostupné. Detaily přijdou až budou připravené k použití."
+                  "text": "Vyvíjíme Cerebrio. Dál plánujeme nové produkty pro hospitality a sklad. Cerebrio je ve vývoji."
                 }
               }
             ]
@@ -270,10 +271,9 @@
             <div class="float-block float-block--b float-block--thin" data-float="-0.14"></div>
             <div class="float-block float-block--c" data-float="0.3"></div>
             <div class="float-block float-block--d float-block--thin" data-float="-0.2"></div>
-            <div class="float-chip float-chip--1" data-float="0.18">build → ship</div>
-            <div class="float-chip float-chip--2" data-float="-0.12">product eng</div>
-            <div class="float-chip float-chip--3" data-float="0.1">praha · cz</div>
-          </div>
+
+
+</div>
         </div>
         <div class="scene-veil" aria-hidden="true"></div>
         <div class="scene-content hero-content">
@@ -309,35 +309,32 @@
           <div class="section-inner">
             <div class="section-head">
               <p class="eyebrow">Služby</p>
-              <h2>Co anythink nabízí?</h2>
+              <h2>Od těsného rozpočtu po enterprise</h2>
               <p class="answer">
-                Tři modely spolupráce: vývoj na míru, kapacita do týmu a sdílený
-                produktový vývoj. Stejná inženýrská laťka, jiné zapojení.
-              </p>
-              <p class="section-lede">
-                Vyberte model podle stavu projektu · ne podle šablony nabídky.
+                Umíme pracovat s majitelem malé firmy i na enterprise systémech.
+                Rozsah se mění · laťka ne.
               </p>
             </div>
             <ul class="service-list">
               <li class="service-item reveal">
                 <span class="service-index">01</span>
                 <div>
-                  <h3>Vývoj na míru</h3>
-                  <p>Od návrhu po produkci · web, API, platformy. Scope podle roadmapy, ne podle generické nabídky.</p>
+                  <h3>Malé firmy a těsný rozpočet</h3>
+                  <p>Řekneme napřímo, co dává smysl a co ne · bez slibů, které neunesou rozpočet ani čas.</p>
                 </div>
               </li>
               <li class="service-item reveal">
                 <span class="service-index">02</span>
                 <div>
-                  <h3>Kapacita do týmu</h3>
-                  <p>Zkušení vývojáři, kteří se napojí na váš proces, drží tempo dodávek a neodcházejí s horším kódem, než našli.</p>
+                  <h3>Enterprise</h3>
+                  <p>Celé systémy, když to zadání vyžaduje · od návrhu po provoz, tak daleko, jak problém sahá.</p>
                 </div>
               </li>
               <li class="service-item reveal">
                 <span class="service-index">03</span>
                 <div>
-                  <h3>Sdílený produktový vývoj</h3>
-                  <p>Dlouhodobá spolupráce na směru produktu, architektuře a iteracích · když potřebujete studio, které řeší víc než ticket.</p>
+                  <h3>Co stavíme</h3>
+                  <p class="capability-line">web · e‑shop · mobil · CRM · BI · AI · embedded · weby</p>
                 </div>
               </li>
             </ul>
@@ -345,28 +342,43 @@
         </div>
       </section>
 
-      <section id="products" class="scene scene--soft" data-scene>
+            <section id="products" class="scene scene--soft" data-scene>
         <div class="scene-stage" aria-hidden="true">
           <div class="drift-panel drift-panel--2" data-float="-0.2"></div>
-          <div class="float-chip float-chip--1" data-float="0.14">scope → code</div>
         </div>
         <div class="scene-veil" aria-hidden="true"></div>
         <div class="scene-content">
           <div class="section-inner">
             <div class="section-head">
-              <p class="eyebrow">Vlastní produkty</p>
-              <h2>Jsou produkty anythink veřejné?</h2>
-              <p class="answer">
-                Ne. Vlastní software je ve vývoji. Veřejné názvy a detaily přijdou,
-                až bude něco připravené k použití · ne dřív.
-              </p>
+              <p class="eyebrow">Produkty</p>
+              <h2>Reference</h2>
             </div>
-            <div class="status-block reveal">
-              <p class="status-label">Stav</p>
-              <p class="status-value">Interní vývoj · neveřejné</p>
-              <p class="status-note">Partnerství nebo early access? Napište · bez prezentací a bez slibů navíc.</p>
-              <a class="text-link" href="mailto:david@anythink.cz">Kontaktovat →</a>
-            </div>
+            <ul class="product-list" data-product-list>
+              <li class="product-item reveal">
+                <button type="button" class="product-row" aria-expanded="false" aria-controls="product-cerebrio">
+                  <span class="product-main">
+                    <span class="product-name">Cerebrio</span>
+                    <span class="product-tagline">Pro realitní makléře a kanceláře</span>
+                  </span>
+                  <span class="product-meta">ve vývoji</span>
+                </button>
+                <div class="product-detail" id="product-cerebrio" hidden>
+                  <p>Pro realitní makléře a kanceláře.</p>
+                </div>
+              </li>
+              <li class="product-item product-item--planned reveal">
+                <div class="product-row is-static">
+                  <span class="product-name">Hospitality</span>
+                  <span class="product-meta">plánováno</span>
+                </div>
+              </li>
+              <li class="product-item product-item--planned reveal">
+                <div class="product-row is-static">
+                  <span class="product-name">Warehouse</span>
+                  <span class="product-meta">plánováno</span>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </section>
@@ -416,9 +428,7 @@
                 </div>
               </div>
               <p class="answer">
-                anythink s.r.o. zakládá a vede David. Studio se sídlem v
-                Šestajovicích (Žižkova 411) pracuje hlavně z Prahy a okolí a bere
-                zakázky po celé ČR.
+                anythink zakládá a vede David Roučka.
               </p>
               <p>
                 Začínal jako číšník, pak bartender, později manažer. Když přišel
@@ -475,27 +485,47 @@
               <h2>Časté otázky</h2>
               <p class="section-lede">Krátké odpovědi, které jdou citovat · bez obalu.</p>
             </div>
-            <div class="faq-list">
-              <details class="faq-item reveal">
-                <summary>Kdo vede anythink?</summary>
-                <p>Founder a CEO je David. Cesta: gastronomie → intenzivní programování od Covidu → produktový vývoj (včetně O2ITS) → anythink s.r.o.</p>
-              </details>
-              <details class="faq-item reveal">
-                <summary>Čím se anythink zabývá?</summary>
-                <p>Softwarové studio: vývoj na míru, kapacita vývojářů do týmů a dlouhodobý sdílený produktový vývoj. Současně stavíme vlastní produkty (zatím neveřejné).</p>
-              </details>
-              <details class="faq-item reveal">
-                <summary>Kde anythink působí?</summary>
-                <p>Sídlo: Žižkova 411, Šestajovice. Provozně Praha a okolí. Zakázky po celé České republice.</p>
-              </details>
-              <details class="faq-item reveal">
-                <summary>Jaký je rozdíl mezi třemi službami?</summary>
-                <p>Vývoj na míru = celý projekt u nás. Kapacita do týmu = lidé do vašeho procesu. Sdílený produktový vývoj = delší partnerství nad směrem produktu i kódem.</p>
-              </details>
-              <details class="faq-item reveal">
-                <summary>Jak anythink kontaktovat?</summary>
-                <p>David Roučka, anythink s.r.o. Kontakty jsou v sekci Kontakt.</p>
-              </details>
+                        <div class="faq-list" data-faq>
+              <div class="faq-item reveal">
+                <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-cs-0">
+                  <span>Kdo vede anythink?</span>
+                </button>
+                <div class="faq-a" id="faq-cs-0" hidden>
+                  <p>anythink zakládá a vede David Roučka.</p>
+                </div>
+              </div>
+              <div class="faq-item reveal">
+                <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-cs-1">
+                  <span>Čím se anythink zabývá?</span>
+                </button>
+                <div class="faq-a" id="faq-cs-1" hidden>
+                  <p>Softwarové studio: vývoj na míru, kapacita do týmů a sdílený produktový vývoj. Vyvíjíme Cerebrio; dál plánujeme produkty pro hospitality a sklad.</p>
+                </div>
+              </div>
+              <div class="faq-item reveal">
+                <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-cs-2">
+                  <span>Kde anythink působí?</span>
+                </button>
+                <div class="faq-a" id="faq-cs-2" hidden>
+                  <p>Sídlo: Žižkova 411, Šestajovice. Provozně Praha a okolí. Zakázky po celé České republice.</p>
+                </div>
+              </div>
+              <div class="faq-item reveal">
+                <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-cs-3">
+                  <span>Od malé firmy po enterprise?</span>
+                </button>
+                <div class="faq-a" id="faq-cs-3" hidden>
+                  <p>U těsného rozpočtu řekneme, co dává smysl a co ne. U enterprise stavíme celé systémy. Typicky: web, e‑shop, mobil, CRM, BI, AI, embedded, weby.</p>
+                </div>
+              </div>
+              <div class="faq-item reveal">
+                <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-cs-4">
+                  <span>Jak anythink kontaktovat?</span>
+                </button>
+                <div class="faq-a" id="faq-cs-4" hidden>
+                  <p>David Roučka, anythink s.r.o. Kontakty jsou v sekci Kontakt.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -510,8 +540,8 @@
               <h2>Napište</h2>
               <p class="answer">Projekt, kapacita do týmu, nebo zájem o produkty.</p>
               <div class="contact-actions">
-                <a class="btn btn-primary" href="mailto:david@anythink.cz">david@anythink.cz</a>
-                <a class="btn btn-ghost" href="tel:+420725993936">+420 725 993 936</a>
+                <a class="btn btn-primary" href="mailto:david@anythink.cz" data-copy="david@anythink.cz">david@anythink.cz</a>
+                <a class="btn btn-ghost" href="tel:+420725993936" data-copy="+420 725 993 936">+420 725 993 936</a>
               </div>
               <address class="contact-meta">
                 <span>David Roučka · Founder &amp; CEO</span>
