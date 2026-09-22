@@ -32,6 +32,16 @@
       document.documentElement.lang === "cs" ? "Zavřít menu" : "Close menu",
   };
 
+
+  function syncLangSwitchHash() {
+    const hash = location.hash || "";
+    document.querySelectorAll(".lang-switch a[hreflang]").forEach((a) => {
+      const raw = a.getAttribute("href") || "./";
+      const base = raw.split("#")[0] || "./";
+      a.setAttribute("href", base + hash);
+    });
+  }
+
   function setMenuOpen(open) {
     if (!toggle || !mobileNav) return;
     toggle.setAttribute("aria-expanded", String(open));
@@ -53,6 +63,8 @@
   if (reduceMotion) {
     // Native document scroll - no hijacked deck
     document.documentElement.classList.remove("deck-mode");
+    syncLangSwitchHash();
+    window.addEventListener("hashchange", syncLangSwitchHash);
     markReady();
     return;
   }
@@ -310,6 +322,7 @@
       history.replaceState(null, "", next);
       window.scrollTo(x, y);
     }
+    syncLangSwitchHash();
   }
 
   function cancelSnap() {
@@ -668,6 +681,9 @@
   requestAnimationFrame(() => {
     requestAnimationFrame(markReady);
   });
+
+  syncLangSwitchHash();
+  window.addEventListener("hashchange", syncLangSwitchHash);
 
   window.__anythinkDeck = {
     goTo: (i) => snapTo(i),
