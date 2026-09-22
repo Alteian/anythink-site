@@ -23,9 +23,9 @@
 
 ## Services
 
-1. Build to order / Vývoj na míru — end-to-end custom software (web, APIs, platforms)
-2. Capacity in your team / Kapacita do týmu — experienced engineers embedded in client process
-3. Shared product development / Sdílený produktový vývoj — longer collaboration on product direction and engineering
+1. Build to order / Vývoj na míru  -  end-to-end custom software (web, APIs, platforms)
+2. Capacity in your team / Kapacita do týmu  -  experienced engineers embedded in client process
+3. Shared product development / Sdílený produktový vývoj  -  longer collaboration on product direction and engineering
 
 ## Leadership
 

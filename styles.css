@@ -154,13 +154,27 @@ p {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: -0.04em;
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: -0.03em;
   color: var(--ink);
   position: relative;
   z-index: 2;
+}
+
+.logo-mark {
+  width: 1.35rem;
+  height: 1.35rem;
+  color: #B8B8C2;
+  flex-shrink: 0;
+}
+
+.logo-word {
+  font-weight: 600;
 }
 
 .header-end {
@@ -368,7 +382,7 @@ p {
   will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Soften chrome only — never transition transform (GSAP owns it) */
+  /* Soften chrome only  -  never transition transform (GSAP owns it) */
   transition:
     border-color 0.35s ease,
     box-shadow 0.35s ease;
@@ -403,7 +417,7 @@ p {
   height: 100%;
   margin: 0;
   padding: clamp(0.75rem, 1.6vw, 1.35rem);
-  overflow: hidden; /* fit the slot — never scroll inside a card */
+  overflow: hidden; /* fit the slot  -  never scroll inside a card */
   overscroll-behavior: none;
   box-sizing: border-box;
   display: flex;
@@ -436,7 +450,7 @@ p {
   max-width: none;
 }
 
-/* Same grid always — scale handles “miniature”, not reflow */
+/* Same grid always  -  scale handles “miniature”, not reflow */
 .deck-card.scene--about .section-inner {
   display: grid;
   grid-template-columns: 1fr;
@@ -892,7 +906,7 @@ html.deck-mode .site-footer {
   margin-bottom: 0.85rem;
 }
 
-/* Services — large interactive rows */
+/* Services  -  large interactive rows */
 
 .service-list {
   display: grid;
@@ -1510,7 +1524,7 @@ html.deck-mode .deck-card .hero-grid {
   will-change: auto;
 }
 
-/* Marquee fights parent transforms — only run on the active hero */
+/* Marquee fights parent transforms  -  only run on the active hero */
 html.deck-mode .deck-card .marquee-track {
   animation-play-state: paused;
 }

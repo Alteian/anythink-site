@@ -1,6 +1,6 @@
 # anythink site
 
-Static company website for [anythink.cz](https://anythink.cz) — Czech primary, English at `/en/`.
+Static company website for [anythink.cz](https://anythink.cz)  -  Czech primary, English at `/en/`.
 
 Works on **GitHub Pages**, Cloudflare Pages, Netlify, or any static host.
 

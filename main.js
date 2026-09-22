@@ -168,7 +168,7 @@
       y: lerp(from.y, to.y, t),
       s: lerp(from.s, to.s, t),
       o: lerp(from.o, to.o, t),
-      // z is assigned by stackZ — never lerp it (causes order pops)
+      // z is assigned by stackZ  -  never lerp it (causes order pops)
       z: from.z,
     };
   }
@@ -249,7 +249,7 @@
     const k = Math.min(Math.floor(clamped + 1e-8), maxP);
     const t = clamped - k;
     const k2 = Math.min(k + 1, maxP);
-    // Never "park early" on epsilon — that flashed the OLD page when t≈1
+    // Never "park early" on epsilon  -  that flashed the OLD page when t≈1
     // scrolling down (floor still on services while snap is almost at products).
     // Morph whenever we span two pages; only park when k === k2.
     const morphing = k !== k2;
@@ -282,7 +282,7 @@
       set._lit = slot.o > 0.01;
     });
 
-    // Classes only on a true integer park — never mid-snap via round()
+    // Classes only on a true integer park  -  never mid-snap via round()
     if (k === k2 && !snapTween) parkClasses(k);
 
     syncChrome(clamped);
@@ -293,7 +293,7 @@
     const id = panels[i]?.id;
     if (!id) return;
     const next = `#${id}`;
-    // replaceState with a hash can still scroll-to-anchor in some engines —
+    // replaceState with a hash can still scroll-to-anchor in some engines  - 
     // only update when needed, and pin scroll so #services can't flash.
     if (location.hash !== next) {
       const x = window.scrollX;
@@ -339,7 +339,7 @@
     }
 
     const dist = Math.abs(target - viewP);
-    // Hero handoff is heavier — slightly longer, softer ease avoids hitch
+    // Hero handoff is heavier  -  slightly longer, softer ease avoids hitch
     const fromHero = Math.round(viewP) === 0 || target === 0;
     const dur = Math.max(
       fromHero ? 0.42 : 0.3,
@@ -379,7 +379,7 @@
   }
 
   function canInnerScroll() {
-    // Deck cards are fit-to-slot — never hand the wheel to inner scroll
+    // Deck cards are fit-to-slot  -  never hand the wheel to inner scroll
     return false;
   }
 
