@@ -23,15 +23,15 @@
 - LinkedIn (company): https://www.linkedin.com/company/anthnk
 - LinkedIn (founder): https://www.linkedin.com/in/david-roucka
 - Holding: https://amphoda.com/
-- Last updated: 2026-09-22
+- Last updated: 2026-09-26
 
 ## Stack (public)
 
-TypeScript, Rust, Python, Go, AWS, Docker, PostgreSQL, Svelte.
+TypeScript, Rust, Python, Go, PostgreSQL.
 
 ## Services
 
-1. Build to order / Vývoj na míru — end-to-end custom software (web, APIs, platforms)
+1. Build to order / Vývoj na míru — end-to-end custom software (websites and applications, APIs, platforms)
 2. Capacity in your team / Kapacita do týmu — experienced engineers embedded in client process
 3. Shared product development / Sdílený produktový vývoj — longer collaboration on product direction and engineering
 
